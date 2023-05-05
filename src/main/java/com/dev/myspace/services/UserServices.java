@@ -1,6 +1,7 @@
 package com.dev.myspace.services;
 
 import java.util.Collection;
+import java.util.Set;
 
 import com.dev.myspace.model.entity.Space;
 import com.dev.myspace.model.entity.Users;
@@ -14,7 +15,7 @@ public interface UserServices {
 	Users register(@NonNull UserRequest userRequest);
 	
 	//Add Space User
-	Collection<Space> addUser (Long adminId, Long SpaceId, Long userId);
+	Set<Users> addUser (Long adminId, Long SpaceId, Long userId);
 	
 	//Retrieve User spaces list
 	Collection<Space> userSpaceList (@NonNull Long userId);

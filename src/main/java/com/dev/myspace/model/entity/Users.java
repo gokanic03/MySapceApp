@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 
@@ -48,15 +49,24 @@ public class Users {
 	 @Column
 	 private String dob;
 	 
-	 @ManyToMany (fetch = FetchType.LAZY)
+	 @EqualsAndHashCode.Exclude
+	 @ManyToMany (fetch = FetchType.EAGER)
 	 @JoinTable(name= "user_space", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="space_id"))
-//	 @JsonIgnore
+	 @JsonIgnore
 //	 Collection<Space> joinedSpaces =  new ArrayList<>();
 	 Set<Space> joinedSpaces = new HashSet<>();
 	 
 	 @OneToMany(cascade = CascadeType.ALL)
 	 @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
 	 private Collection<SpaceMessages> messages;
+	 
+	 public Users setJoinedSpaces(final Set<Space> joinedSpaces) {
+	     this.joinedSpaces.clear();
+	     if (joinedSpaces != null) {
+	         this.joinedSpaces.addAll(joinedSpaces);
+	     }
+	     return this;
+	 }
 	 
 	 public Users (UserRequest userRequest) {
 			this(null, // userId

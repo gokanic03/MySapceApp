@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 
@@ -40,12 +43,13 @@ public class Space {
 	 @Column
 	 private String spaceName;
 	 
+	 @EqualsAndHashCode.Exclude
 	 @ManyToMany(mappedBy = "joinedSpaces")
-//	 @JsonIgnore
-	 Set<Users> spaceUsers = new HashSet<>();
+	 @JsonIgnore
+	 Set<Users> spaceUsers= new HashSet<>();
 //	 Collection<Users> spaceUsers = new ArrayList<>();
 	 
- 
+	 
 	 public Space (SpaceRequest spaceRequest) {
 			this(null, // spaceId
 					null,
@@ -53,4 +57,5 @@ public class Space {
 					null
 			);
 		}
+	 
 }

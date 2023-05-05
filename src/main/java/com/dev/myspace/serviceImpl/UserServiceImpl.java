@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserServices{
 	
 	@Override
 	@Transactional
-	public Collection<Space> addUser(Long adminId, Long spaceId, Long userId) {
+	public Set<Users> addUser(Long adminId, Long spaceId, Long userId) {
 		// TODO Auto-generated method stub
 		
 		Space space = spaceRepository.findById(spaceId)
@@ -73,11 +73,13 @@ public class UserServiceImpl implements UserServices{
 			Users user = userRepository.findById(userId)
 					.orElseThrow(()-> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "User  Not found!"));
 			
+//			space.getSpaceUsers().add(user);
 			spaceUsers.add(user);
 			System.out.println("Inside");
 //			spaceUsers.addAll(Set.of(user));
-//			spaceRepository.save(space);
-			return null;
+			space.setSpaceUsers(spaceUsers);
+			spaceRepository.save(space);
+			return spaceUsers;
 //			space.getSpaceUsers()
 //			.addAll(space.getSpaceUsers()
 //					.stream()

@@ -2,6 +2,7 @@ package com.dev.myspace.controller;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
 
@@ -39,7 +40,7 @@ public class UserController {
 	
 	@PostMapping(path = "/{spaceId}/AddUser", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> registerUser(@RequestHeader("adminId") Long adminId , @PathVariable Long spaceId, @RequestHeader("userId") Long userId) {
-		Collection<Space> space = userServices.addUser(adminId, spaceId, userId);
+		Set<Users> space = userServices.addUser(adminId, spaceId, userId);
 	    return ResponseEntity.ok(space);
 	}
 	
